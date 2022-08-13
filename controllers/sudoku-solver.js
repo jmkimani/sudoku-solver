@@ -141,9 +141,11 @@ class SudokuSolver {
 
   solve(puzzleString) {
     // Validate the puzzle first
-    /*if (typeof validate(puzzleString) == 'object') {
+    if (typeof this.validate(puzzleString) == 'object') {
       return { error: 'Puzzle cannot be solved' };
-    }*/
+    }
+    
+    // Solve a valid puzzle
     const puzzleGrid = this.puzzleGrid(puzzleString);
     if (this._solve(puzzleGrid)) {
       return { solution: puzzleGrid.flat().join('') };

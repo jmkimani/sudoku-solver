@@ -7,7 +7,9 @@ let solver = new Solver;
 
 suite('Unit Tests', () => {
   const puzzleString = '1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
-  const invalidPuzzleString = '0.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+  const solution = '135762984946381257728459613694517832812936745357824196473298561581673429269145378';
+  const invalidPuzzle = '0.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.';
+  const noSolution = '5.65.84.352......2187....31..3.1..8.9..863..5.5..9.6..13....25........74..52.63..';
   
   // Test Validity of puzzle string
   test('#1 Puzzle string should have 81 characters', () => {
@@ -25,7 +27,7 @@ suite('Unit Tests', () => {
   
   test('#2 Puzzle string should contain "1-9" and "." only', () => {
     assert.deepEqual(
-      solver.validate(invalidPuzzleString),
+      solver.validate(invalidPuzzle),
       { error: 'Invalid characters in puzzle' },
       'Invalid characters in puzzle'
     );
@@ -63,7 +65,15 @@ suite('Unit Tests', () => {
     assert.isFalse(solver.checkRegionPlacement(puzzleString, 0, 0, 2));
   });
   
-  // test #10
-  // test #11
-  // test #12
+  test('#10 Valid puzzle strings pass the solver', () => {
+    assert.property(solver.solve(puzzleString), 'solution');
+  });
+  
+  test('#11 Invalid puzzle strings fail the solver', () => {
+    assert.deepEqual(solver.solve(noSolution), { error: 'Puzzle cannot be solved' });
+  });
+
+  test('#12 Solver returns the expected solution', () => {
+    assert.propertyVal(solver.solve(puzzleString), 'solution', solution);
+  });
 });

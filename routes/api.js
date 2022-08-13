@@ -25,7 +25,7 @@ module.exports = function (app) {
       }
 
       // [coordinate] should be [A-I] for rows and [1-9] for columns
-      if (/[^A-I^1-9]/i.test(req.body.coordinate)) {
+      if (req.body.coordinate.length != 2 || /[^A-I^1-9]/i.test(req.body.coordinate)) {
         return res.json({ error: 'Invalid coordinate' });
       }
 

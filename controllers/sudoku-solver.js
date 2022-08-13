@@ -22,21 +22,6 @@ class SudokuSolver {
       return true;
     }
   }
-  
-  puzzleGrid(puzzleString) {
-    /**
-    * Converts puzzleString into an array of arrays
-    *
-    * Returns:
-    *   grid [rows[columns]]
-    */
-    
-    let grid = [];
-    for (let i = 0; i < 9; i++) {
-      grid.push(puzzleString.slice(i*9, (i+1)*9).split(''));
-    }
-    return grid;
-  }
 
   checkRowPlacement(puzzleString, row, column, value) {
     /**
@@ -81,6 +66,21 @@ class SudokuSolver {
     return true;
   }
 
+  puzzleGrid(puzzleString) {
+    /**
+    * Converts puzzleString into an array of arrays
+    *
+    * Returns:
+    *   grid [rows[columns]]
+    */
+    
+    let grid = [];
+    for (let i = 0; i < 9; i++) {
+      grid.push(puzzleString.slice(i*9, (i+1)*9).split(''));
+    }
+    return grid;
+  }
+
   findEmptyCell(puzzleGrid) {
     /**
     * Finds a cell that needs to be filled in the [puzzleGrid] (converted puzzle string).
@@ -98,6 +98,9 @@ class SudokuSolver {
   }
 
   checkPlacement(puzzleString, row, column, value) {
+    // If value is already in the puzzle
+    if (this.puzzleGrid(puzzleString)[row][column] == value) return { valid: true };
+    
     // Check for conflict in [row, column, region] placement
     let conflict = [];
     this.checkRowPlacement(puzzleString, row, column, value) || conflict.push('row');
